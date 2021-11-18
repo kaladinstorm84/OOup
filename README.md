@@ -1,5 +1,5 @@
 # OOup
-A c# Task based deployment framework
+A c# Task based deployment pipeline framework. Designed to allow you to control the deployment of the application, in the language it was written - without the need for 'frustrating' YAML pipeline files
 
 ## usage
     using OOup.Tasks;
