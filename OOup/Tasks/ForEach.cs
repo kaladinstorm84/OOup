@@ -25,9 +25,17 @@ namespace OOup.Tasks
             foreach(T item in Items)
             {
                 BaseTask task = Action(item);
+                WriteToStatus($"Running : {task.GetType().Name}");
                 task.Execute();
                 WriteToStatus(task.ExecStatus.Output.ToString(),task.ExecStatus.Status);
-
+                if (task.ExecStatus.Status == Status.Completed)
+                {
+                    WriteToStatus("Completed", task.ExecStatus.Status, MessageType.Pass);
+                }
+                else
+                {
+                    WriteToStatus("Failed", task.ExecStatus.Status, MessageType.Error);
+                }
             }
         }
     }
