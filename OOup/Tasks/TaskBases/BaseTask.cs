@@ -11,7 +11,7 @@ namespace OOup.Tasks.TaskBases
 {
     public abstract class BaseTask : LoggingTask, ITask
     {
-        protected override ExecuteStatus ExecStatus { get; set; } = new ExecuteStatus();
+        public override ExecuteStatus ExecStatus { get; set; } = new ExecuteStatus();
         public string StepName { get; set; } = "";
 
         protected BaseTask() : base()

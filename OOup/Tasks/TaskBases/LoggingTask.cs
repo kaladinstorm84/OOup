@@ -5,7 +5,7 @@ namespace OOup.Tasks.TaskBases
     public abstract class LoggingTask
     {
         protected Action<string> logging;
-        protected abstract ExecuteStatus ExecStatus { get; set; }
+        public abstract ExecuteStatus ExecStatus { get; set; }
         protected LoggingTask()
         {
             logging = Console.WriteLine;
