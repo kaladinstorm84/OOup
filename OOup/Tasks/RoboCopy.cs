@@ -8,7 +8,8 @@ namespace OOup.Tasks
 {
     public class RoboCopy : CommandLine
     {
-        public RoboCopy(string source, string destination, bool MirrorEntireStructure=true) : base("ROBOCOPY", $"{source} {destination}{(MirrorEntireStructure ? " /MIR":"")}")
+        public RoboCopy(string source, string destination, bool MirrorEntireStructure=true) 
+            : base("ROBOCOPY", $"{source} {destination}{(MirrorEntireStructure ? " /MIR":"")}")
         {
         }
     }
