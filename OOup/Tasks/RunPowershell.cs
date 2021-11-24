@@ -24,9 +24,7 @@ namespace OOup.Tasks
         {
             using (PowerShell powerShell = PowerShell.Create())
             {
-                powerShell.AddScript(ScriptLocation);
-                powerShell.AddCommand("Out-String");
-                powerShell.AddParameters(Args);
+                powerShell.AddScript(ScriptLocation).AddArgument(Args);
                 Collection<PSObject> PSOutput = powerShell.Invoke();
                 foreach (PSObject pSObject in PSOutput)
 

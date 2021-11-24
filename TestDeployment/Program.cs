@@ -11,7 +11,9 @@ OOup.Tasks.TaskManager manager = new OOup.Tasks.TaskManager()
     { new SetWorkingDirectory("C:\\") },
     { new CommandLine("dir","") },
     { new ForEach<string>(directories, d => new SetWorkingDirectory(d) ) },
-    { new CommandLine("dir","") }
+    { new CommandLine("dir","") },
+    { new InstallIISAppPool("TestPoolDeploy") },
+    { new InstallIISWebsite("TestSite2","TestPoolDeploy","c:\\Website") }
 
 };
 

@@ -1,11 +1,6 @@
 ﻿using OOup.Interfaces;
+using OOup.Library;
 using OOup.Statuses;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOup.Tasks.TaskBases
 {
@@ -22,6 +17,7 @@ namespace OOup.Tasks.TaskBases
         public ExecuteStatus Execute()
         {
             Run();
+            VariableLibrary.Parse(ExecStatus);
             if (ExecStatus.Status == Status.InProgress)
                 ExecStatus.Status = Status.Completed;
             return ExecStatus;
