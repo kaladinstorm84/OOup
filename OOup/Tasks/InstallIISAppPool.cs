@@ -6,11 +6,26 @@ using System.Threading.Tasks;
 
 namespace OOup.Tasks
 {
-    public class InstallIISAppPool : RunPowershell
+    public class InstallIISAppPool : RunPowershellIIS
     {
-        const string inlineScript = "Param([string] $AppPoolName)if (!(Test-Path IIS:\\AppPools\\$AppPoolName -pathType container)){ Write-Output \"Create the app pool\" ; $appPool = New-WebAppPool -Name $AppPoolName -Force;}";
-        public InstallIISAppPool(string appPool) : base(inlineScript, appPool)
+        public override string Script { get {
+                StringBuilder script = new StringBuilder();
+                script.AppendLine("[CmdletBinding()]");
+                script.AppendLine("Param");
+                script.AppendLine("([string] $AppPoolName)");
+                script.AppendLine("if (!(Test-Path IIS:\\AppPools\\$AppPoolName -pathType container))");
+                script.AppendLine("{");
+                script.AppendLine("Import-Module WebAdministration;");
+                script.AppendLine("Write-Output \"Create the app pool\" ;");
+                script.AppendLine("$appPool = New-WebAppPool -Name $appPoolName;");
+                script.AppendLine("$appPool");
+                script.AppendLine("}");
+                return script.ToString();
+            }
+        }
+        public InstallIISAppPool(string appPool): base(appPool)
         {
+         
         }
     }
 }

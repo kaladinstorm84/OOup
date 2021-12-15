@@ -4,7 +4,7 @@ List<string> directories = new List<string>()
     "c:\\", "c:\\shared"
 };
 
-OOup.Tasks.TaskManager manager = new OOup.Tasks.TaskManager()
+TaskList taskList = new TaskList()
 {
     { new CommandLine("ipconfig", "/all") },
     { new CommandLine("dir","") },
@@ -13,8 +13,8 @@ OOup.Tasks.TaskManager manager = new OOup.Tasks.TaskManager()
     { new ForEach<string>(directories, d => new SetWorkingDirectory(d) ) },
     { new CommandLine("dir","") },
     { new InstallIISAppPool("TestPoolDeploy") },
-    { new InstallIISWebsite("TestSite2","TestPoolDeploy","c:\\Website") }
+    { new InstallIISWebsite("TestSite2","TestPoolDeploy","C:\\inetpub\\wwwroot") }
 
 };
 
-OOup.OOupDeploy.Deploy(manager);
+OOup.OOupDeploy.Deploy(taskList);

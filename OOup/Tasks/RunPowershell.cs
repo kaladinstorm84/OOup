@@ -1,4 +1,5 @@
-﻿using OOup.Tasks.TaskBases;
+﻿using Newtonsoft.Json;
+using OOup.Tasks.TaskBases;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,35 +10,60 @@ using System.Threading.Tasks;
 
 namespace OOup.Tasks
 {
-    public class RunPowershell : BaseTask
+    /// <summary>
+    /// Pass an Inline script to the Powershell host
+    /// 
+    /// Variables will be captured if written to Host as [%VariableName%]=Value
+    /// </summary>
+    public abstract class RunPowershell : BaseTask
     {
-        public RunPowershell(string inlineScript, params string [] args) :base()
+        public abstract string Script { get; }
+        public string? Command { get; set; } = null;
+        public RunPowershell(params string[] args) : base()
         {
-            this.ScriptLocation = inlineScript;
+            Args = args;
+        }
+        public RunPowershell(string script, params string[] args) : base()
+        {
+            Command = script;
             Args = args;
         }
 
-        public string ScriptLocation { get; }
         public string[] Args { get; }
 
         public override void Run()
         {
+            
             using (PowerShell powerShell = PowerShell.Create())
             {
-                powerShell.AddScript(ScriptLocation).AddArgument(Args);
+                powerShell.AddScript(Command ?? Script);
+                foreach (string arg in Args)
+                {
+                    powerShell.AddArgument(arg);
+                }
                 Collection<PSObject> PSOutput = powerShell.Invoke();
                 foreach (PSObject pSObject in PSOutput)
-
-                if (powerShell.HadErrors)
                 {
-                    WriteToStatus(pSObject.ToString(),type:MessageType.Error);
-                    Fail();
-                }
-                else
-                {
-                        WriteToStatus(pSObject.ToString(), type: MessageType.Info);
+                    WriteToStatus(JsonConvert.SerializeObject(pSObject), type: MessageType.Info);
+                    if (powerShell.HadErrors)
+                    {
+                        Fail();
+                    }
+                    else
+                    {
                         Complete();
+                    }
                 }
+                foreach (var d in powerShell.Streams.Error)
+                {
+                    WriteToStatus(d.Exception.Message);
+                    if (d.ErrorDetails != null)
+                    {
+                        WriteToStatus(d.ErrorDetails.Message,type: MessageType.Error);
+                    }
+                }
+
+
             }
         }
     }

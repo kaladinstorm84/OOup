@@ -10,7 +10,7 @@ namespace OOup
 {
     public static class OOupDeploy
     {
-        public static void Deploy(TaskManager taskCollection)
+        public static void Deploy(TaskList taskCollection)
         {
             foreach (KeyValuePair<int, ITask> item in taskCollection.OrderBy(a => a.Key))
             {

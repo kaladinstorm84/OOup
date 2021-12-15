@@ -24,6 +24,7 @@ namespace OOup.Tasks.TaskBases
         {
             logging(message);
         }
+        
         protected void WriteToStatus(string Message, Status state=Status.InProgress, MessageType type = MessageType.Info)
         {
             string color = "";

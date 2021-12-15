@@ -16,7 +16,6 @@ namespace OOup.Tasks
             Items = items;
             Action = action;
         }
-
         public IEnumerable<T> Items { get; }
         public Func<T, BaseTask> Action { get; }
 

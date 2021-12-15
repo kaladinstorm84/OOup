@@ -9,8 +9,12 @@ using System.Threading.Tasks;
 
 namespace OOup.Tasks
 {
-    public class TaskManager : IDictionary<int, ITask>
+    public class TaskList : IDictionary<int, ITask>
     {
+        public TaskList(params string [] args)
+        {
+            Args = args;
+        }
         public ITask this[int key] { get => ((IDictionary<int, ITask>)tasks)[key]; set => ((IDictionary<int, ITask>)tasks)[key] = value; }
 
         public Dictionary<int, ITask> tasks { get; set; } = new Dictionary<int, ITask>();
@@ -22,6 +26,8 @@ namespace OOup.Tasks
         public int Count => ((ICollection<KeyValuePair<int, ITask>>)tasks).Count;
 
         public bool IsReadOnly => ((ICollection<KeyValuePair<int, ITask>>)tasks).IsReadOnly;
+
+        public string[] Args { get; }
 
         public void Add(int key, ITask value)
         {

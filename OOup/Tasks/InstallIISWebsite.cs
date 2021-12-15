@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OOup.Tasks
+﻿namespace OOup.Tasks
 {
-    public class InstallIISWebsite : RunPowershell
+    public class InstallIISWebsite : RunPowershellIIS
     {
-        const string inlineScript = "Param([string] $appName, [string] $appPool, [string] $Path) New-WebApplication $appName -Site $appName -ApplicationPool $appPool -PhysicalPath $Path";
-        public InstallIISWebsite(string WebsiteName, string appPool, string directory) : base(inlineScript, WebsiteName, appPool, directory)
+        public override string Script => "[CmdletBinding()]Param([string] $appName, [string] $appPool, [string] $Path) Import-Module WebAdministration; New-WebSite -Name $appName -ApplicationPool $appPool -PhysicalPath $Path";
+        public InstallIISWebsite(string WebsiteName, string appPool, string directory) : base(WebsiteName, appPool, directory)
         {
         }
     }
