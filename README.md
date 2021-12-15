@@ -4,12 +4,22 @@ A c# Task based deployment pipeline framework. Designed to allow you to control 
 ## usage
     using OOup.Tasks;
 
-    OOup.Tasks.TaskManager manager = new OOup.Tasks.TaskManager()
-    {
-        { new CommandLine("ipconfig", "/all") },
-        { new CommandLine("dir","") },
-        { new SetWorkingDirectory("C:\\") },
-        { new CommandLine("dir","") }
-    };
+	List<string> directories = new List<string>()
+	{
+		"c:\\", "c:\\shared"
+	};
 
-    OOup.OOupDeploy.Deploy(manager);
+	TaskList taskList = new TaskList()
+	{
+		{ new CommandLine("ipconfig", "/all") },
+		{ new CommandLine("dir","") },
+		{ new SetWorkingDirectory("C:\\") },
+		{ new CommandLine("dir","") },
+		{ new ForEach<string>(directories, d => new SetWorkingDirectory(d) ) },
+		{ new CommandLine("dir","") },
+		{ new InstallIISAppPool("TestPoolDeploy") },
+		{ new InstallIISWebsite("TestSite2","TestPoolDeploy","C:\\inetpub\\wwwroot") }
+
+	};
+
+	OOup.OOupDeploy.Deploy(taskList);
