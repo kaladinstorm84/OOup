@@ -38,5 +38,3 @@ jobs:
         PACKAGE_NAME: OOup
         # API key to authenticate with NuGet server
         NUGET_KEY: oy2h4tlklxeo6rzpm74qttlpe5ocpgcerfhqzcod6q4jfa
-    - name: Push
-      run: dotnet push **/*.nupkg
