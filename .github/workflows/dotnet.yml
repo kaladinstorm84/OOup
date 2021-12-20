@@ -36,9 +36,5 @@ jobs:
         PROJECT_FILE_PATH: ./OOup/OOup.csproj
         # NuGet package id, used for version detection & defaults to project name
         PACKAGE_NAME: OOup
-        # Format of the git tag, [*] gets replaced with actual version
-        TAG_FORMAT: # optional, default is v*
         # API key to authenticate with NuGet server
         NUGET_KEY: oy2h4tlklxeo6rzpm74qttlpe5ocpgcerfhqzcod6q4jfa
-    - name: Push
-      run: dotnet push **/*.nupkg
