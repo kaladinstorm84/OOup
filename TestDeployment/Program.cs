@@ -1,7 +1,13 @@
-﻿using OOup.Tasks;
+﻿using OOup;
+using OOup.DataObjects;
+using OOup.Tasks;
 List<string> directories = new List<string>()
 {
     "c:\\", "c:\\shared"
+};
+DatabaseConnection connection = new DatabaseConnection()
+{
+    UserName = ""
 };
 
 TaskList taskList = new TaskList()
@@ -13,8 +19,8 @@ TaskList taskList = new TaskList()
     { new ForEach<string>(directories, d => new SetWorkingDirectory(d) ) },
     { new CommandLine("dir","") },
     { new InstallIISAppPool("TestPoolDeploy") },
-    { new InstallIISWebsite("TestSite2","TestPoolDeploy","C:\\inetpub\\wwwroot") }
-
+    { new InstallIISWebsite("TestSite2","TestPoolDeploy","C:\\inetpub\\wwwroot") },
+    { new RunSQLFile("", connection) }
 };
 
-OOup.OOupDeploy.Deploy(taskList);
+OOupDeploy.Deploy(taskList);

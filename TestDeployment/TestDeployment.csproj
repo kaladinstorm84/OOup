@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OOup\OOup.csproj" />
+    <PackageReference Include="OOup" Version="1.0.0.1-alpha" />
   </ItemGroup>
 
 </Project>
