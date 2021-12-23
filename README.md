@@ -23,3 +23,5 @@ A c# Task based deployment pipeline framework. Designed to allow you to control 
 	};
 
 	OOup.OOupDeploy.Deploy(taskList);
+
+Nuget available at https://www.nuget.org/packages/OOup/
